@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: ./deployment/deploy-uat.sh
+    - run: chmod +x ./deployment/deploy-uat.sh && ./deployment/deploy-uat.sh
       shell: bash
 
   first-deploy:
