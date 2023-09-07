@@ -19,6 +19,8 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: nkoppel/push-files-to-another-repository@993c4b2dae204519735dd914c24dd6f1d2acd24d
       uses: nkoppel/push-files-to-another-repository@v1.1.1
+      env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
         # The files/directories to copy to the destination repository. Can have multiple space-separated filenames and globbing.
         source-files: deploymet/
