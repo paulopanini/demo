@@ -22,7 +22,7 @@ jobs:
     - run: mkdir demo
     - run: ls
     - run: cp -a deployment/. microservice-configurations/demo/
-    - run: cd microservice-configurations && git config --unset-all https://github.com/.extraheader && git remote set-url origin https://paulopanini:$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git && git add . && git commit -m "Adding demo to IAC" && git push
+    - run: cd microservice-configurations && git config --unset-all http.https://github.com/.extraheader && git remote set-url origin https://paulopanini:$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git && git add . && git commit -m "Adding demo to IAC" && git push
 
 
 
