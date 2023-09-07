@@ -1,0 +1,40 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: demo
+  description: Say hello
+spec:
+  type: openapi
+  lifecycle: production
+  owner: benify:core
+  system: platform
+  definition: | 
+    openapi: 3.0.3
+    info:
+      title: Swagger Test
+      version: "1.0"
+      description: |-
+        This is a sample project created using Backstage
+    servers:
+      - url: https://localhost/ demo
+    tags:
+      - name: Hello
+    paths:
+      /hello:
+        get:
+          tags:
+            - Hello
+          summary: Say hello
+          description: Returns hello
+          operationId: hello
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+          

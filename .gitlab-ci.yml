@@ -1,0 +1,68 @@
+image: jelastic/maven:3.8.6-openjdk-20.ea-b24
+
+stages:
+  - maven
+  - docker
+  - deploy
+  
+build:
+  stage: maven
+  rules: 
+    - if: $CI_COMMIT_BRANCH
+  script: "mvn install -B"
+  artifacts:
+    paths:
+      - target/*
+    expire_in: 1 day
+
+build-docker-image:
+  stage: docker
+  image: docker:20.10.16
+  rules: 
+    - if: $CI_COMMIT_BRANCH
+  services:
+    - docker:20.10.16-dind
+  script:
+    - export VERSION=$(date +%s)
+    - docker build . --file Dockerfile --tag paulopanini/demo:$CI_COMMIT_SHORT_SHA
+    - docker login -u paulopanini -p dckr_pat_WeZbTsfCKF2GFuMlhYQXXYjwN7g 
+    - docker push paulopanini/demo:$CI_COMMIT_SHORT_SHA
+
+
+deploy-uat:
+  stage: deploy
+  rules: 
+    - if: $CI_COMMIT_MESSAGE =~ /.*#deployuat.*/ && $CI_COMMIT_BRANCH
+  when: manual
+  before_script:
+    - git clone https://oauth2:glpat-Ty4AVdC2TyuBku7GAvpC@gitlab.com/paulopanini/microservice-configurations.git
+    - git remote set-url origin https://oauth2:glpat-Ty4AVdC2TyuBku7GAvpC@gitlab.com/paulopanini/microservice-configurations.git
+    - git config --global user.email "backstage@benify.com"
+    - git config --global user.name "backstage"
+  script:
+    - cd microservice-configurations/demo
+    - sed -i -E "s/(demo:)[a-z|0-9]*/demo:$CI_COMMIT_SHORT_SHA/g" deployment.yaml
+    - git add .
+    - git commit -m "Deploy $CI_COMMIT_TIMESTAMP"
+    - git push
+
+
+
+first-deploy:
+  stage: deploy
+  rules: 
+    - if: $CI_COMMIT_MESSAGE =~ /.*#backstage.*/ && $CI_COMMIT_BRANCH
+  before_script:
+    - git clone https://oauth2:glpat-Ty4AVdC2TyuBku7GAvpC@gitlab.com/paulopanini/microservice-configurations.git
+    - git remote set-url origin https://oauth2:glpat-Ty4AVdC2TyuBku7GAvpC@gitlab.com/paulopanini/microservice-configurations.git
+    - git config --global user.email "backstage@benify.com"
+    - git config --global user.name "backstage"
+  script:
+    - ls
+    - cd microservice-configurations
+    - git config user.name "backstage"
+    - mkdir demo
+    - cp -a ../deployment/. demo/
+    - git add .
+    - git commit -m "Adding demo to IAC"
+    - git push
