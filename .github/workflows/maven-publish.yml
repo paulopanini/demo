@@ -30,3 +30,4 @@ jobs:
         destination-repository: microservice-configurations
         # Email for the commit
         commit-email: paulo.panini@benify.com
+        destination-branch: main
