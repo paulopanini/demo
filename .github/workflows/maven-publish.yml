@@ -46,7 +46,7 @@ jobs:
           ghcr.io/${{ github.repository_owner }}/demo:latest
 
   deploy-uat: 
-    if: "contains(github.event.head_commit.message, '[#deployuat]')"
+    if: "contains(github.event.head_commit.message, '#deployuat')"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -64,7 +64,7 @@ jobs:
     - run: git push
 
   first-deploy:
-    if: "contains(github.event.head_commit.message, '[#backstage]')"
+    if: "contains(github.event.head_commit.message, '#backstage')"
     runs-on: ubuntu-latest
     steps:
     - name: Handle first deploy
