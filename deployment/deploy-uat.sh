@@ -1,5 +1,5 @@
 #!/bin/sh -l
-
+echo ${{ secrets.API_GITHUB_TOKEN }}
 git clone https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
 cd microservice-configurations/demo
 git remote set-url origin https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
