@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,9 +44,30 @@ jobs:
         platforms: linux/amd64,linux/arm64
         tags: |
           ghcr.io/${{ github.repository_owner }}/demo:latest
-          
-    - name: Push directory to another repository
-      if: "contains(github.event.head_commit.message, '[#backstage]')"
+
+  deploy-uat: 
+    if: "contains(github.event.head_commit.message, '[#deployuat]')"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - run: git clone https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
+    - run: git remote set-url origin https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
+    - run: git config --global user.email "backstage@benify.com"
+    - run: git config --global user.name "backstage"
+    - run: cd microservice-configurations/demo
+    - run: sed -i -E "s/(hello-world:)[a-z|0-9]*/demo:$CI_COMMIT_SHORT_SHA/g" deployment.yaml
+    - run: git add .
+    - run: git commit -m "Deploy $CI_COMMIT_TIMESTAMP"
+    - run: git push
+
+  first-deploy:
+    if: "contains(github.event.head_commit.message, '[#backstage]')"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Handle first deploy
       uses: cpina/github-action-push-to-another-repository@v1.7.2
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_GITHUB_TOKEN }}
