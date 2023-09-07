@@ -20,5 +20,5 @@ jobs:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
         repository: 'paulopanini/microservice-configurations'
-    - run: mkdir demo && cd .. && ls
+    - run: mkdir demo && cd ../.. && ls
     
