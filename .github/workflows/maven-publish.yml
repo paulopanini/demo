@@ -21,7 +21,7 @@ jobs:
     - run: git config --global user.name "backstage"
     - run: mkdir demo
     - run: ls
-    - run: cp -a deployment/. /microservice-configurations/demo/
+    - run: cp -a deployment/. microservice-configurations/demo/
     - run: cd microservice-configurations && git add . && git commit -m "Adding demo to IAC" && git push
 
 
