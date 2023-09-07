@@ -15,14 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: ls
-    - run: git clone https://$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git
-    - run: git remote set-url origin https://$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git
+    - run: git clone https://$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git
+    - run: git remote set-url origin https://$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git
     - run: git config --global user.email "backstage@benify.com"
     - run: git config --global user.name "backstage"
     - run: mkdir demo
     - run: ls
     - run: cp -a deployment/. microservice-configurations/demo/
-    - run: cd microservice-configurations && git remote set-url origin https://paulopanini:$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git && git add . && git commit -m "Adding demo to IAC" && git push
+    - run: cd microservice-configurations && git remote set-url origin https://paulopanini:$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git && git add . && git commit -m "Adding demo to IAC" && git push
 
 
 
