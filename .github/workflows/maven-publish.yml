@@ -15,14 +15,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: ls
-    - name: Push generated webpage to another repository
-      uses: nkoppel/push-files-to-another-repository@1.1.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+    - name: Copy File to Another Repository
+      # You may pin to the exact commit or the version.
+      # uses: supsm/copy_file_to_another_repo@d01abc8c20d9c3f19c5bba21a599db7e7093feed
+      uses: supsm/copy_file_to_another_repo@1.1.1
       with:
-        source-files: 'deployment/'
-        destination-username: 'paulopanini'
-        destination-repository: 'microservice-configurations'
-        destination-directory: 'demo'
-        commit-email: 'paulo.panini@benify.com'
+        # Source file from the origin directory
+        source_file: deployment/
+        # Destination repository
+        destination_repo: paulopanini/microservice-configurations
+        # Directory to push the file to
+        destination_folder: demo
+        # Email for the git commit
+        user_email: paulo.panini@benify.com
+        # GitHub username for the commit
+        user_name: paulopanini
     
