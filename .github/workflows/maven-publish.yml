@@ -14,15 +14,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: ls
-    - run: git clone https://$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git
-    - run: git remote set-url origin https://$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git
-    - run: git config --global user.email "backstage@benify.com"
-    - run: git config --global user.name "backstage"
-    - run: mkdir demo
-    - run: ls
-    - run: cp -a deployment/. microservice-configurations/demo/
-    - run: cd microservice-configurations && git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \xargs -L1 git config --unset-all && git remote set-url origin https://paulopanini:$${{ secrets.GITHUB_TOKEN  }}@github.com/paulopanini/microservice-configurations.git && git add . && git commit -m "Adding demo to IAC" && git push
-
+    - name: Push directory to another repository
+      # You may pin to the exact commit or the version.
+      # uses: cpina/github-action-push-to-another-repository@07c4d7b3def0a8ebe788a8f2c843a4e1de4f6900
+      uses: cpina/github-action-push-to-another-repository@v1.7.2
+      with:
+        # Source before directory from the origin directory
+        source-before-directory: deployment
+        # Source directory from the origin directory
+        source-directory: deployment
+        # Name of the destination username/organization
+        destination-github-username: paulopanini
+        # Destination repository
+        destination-repository-name: microservice-configurations
+        # Email for the git commit
+        user-email: paulopanini@gmail.com
+        # [Optional] commit message for the output repository. ORIGIN_COMMIT is replaced by the URL@commit in the origin repo
+        commit-message: Adding demo to IAC
+        # [Optional] The directory to wipe and replace in the target repository
+        target-directory: demo
 
 
