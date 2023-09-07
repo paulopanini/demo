@@ -55,10 +55,10 @@ jobs:
 
     steps:
     - run: git clone https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
+    - run: cd microservice-configurations/demo
     - run: git remote set-url origin https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
     - run: git config --global user.email "backstage@benify.com"
     - run: git config --global user.name "backstage"
-    - run: cd microservice-configurations/demo
     - run: sed -i -E "s/(hello-world:)[a-z|0-9]*/demo:$CI_COMMIT_SHORT_SHA/g" deployment.yaml
     - run: git add .
     - run: git commit -m "Deploy $CI_COMMIT_TIMESTAMP"
