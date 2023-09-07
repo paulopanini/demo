@@ -15,19 +15,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: ls
-    - name: Copy files to another repository
-      # You may pin to the exact commit or the version.
-      # uses: nkoppel/push-files-to-another-repository@993c4b2dae204519735dd914c24dd6f1d2acd24d
-      uses: nkoppel/push-files-to-another-repository@v1.1.1
-      env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-        # The files/directories to copy to the destination repository. Can have multiple space-separated filenames and globbing.
-        source-files: deployment/
-        # Name of the destination username/organization
-        destination-username: paulopanini
-        # Name of the destination repository
-        destination-repository: microservice-configurations
-        # Email for the commit
-        commit-email: paulo.panini@benify.com
-        destination-branch: main
+    - run: git clone https://$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git
+    - run: git remote set-url origin https://$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git
+    - run: git config --global user.email "backstage@benify.com"
+    - run: git config --global user.name "backstage"
+    - run: ls
+    - run: cd microservice-configurations
+    - run: git config user.name "backstage"
+    - run: mkdir hello-world
+    - run: cp -a ../deployment/. demo/
+    - run: git add .
+    - run: git commit -m "Adding demo to IAC"
+    - run: git push
+
+
+
