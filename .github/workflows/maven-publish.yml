@@ -15,10 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: ls
-    - uses: actions/checkout@v4
+    - name: Push generated webpage to another repository
+      uses: nkoppel/push-files-to-another-repository@1.1.0
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        # Repository name with owner. For example, actions/checkout
-        # Default: ${{ github.repository }}
-        repository: 'paulopanini/microservice-configurations'
-    - run: mkdir demo && cd ../.. && ls
+        source-files: 'deployment/'
+        destination-username: 'paulopanini'
+        destination-repository: 'microservice-configurations'
+        destination-directory: 'demo'
+        commit-email: 'paulo.panini@benify.com'
     
