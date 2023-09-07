@@ -19,14 +19,10 @@ jobs:
     - run: git remote set-url origin https://$${{ secrets.API_TOKEN_GITHUB }}@github.com/paulopanini/microservice-configurations.git
     - run: git config --global user.email "backstage@benify.com"
     - run: git config --global user.name "backstage"
-    - run: ls
-    - run: cd microservice-configurations
     - run: mkdir demo
     - run: ls
-    - run: cp -a ../deployment/. demo/
-    - run: git add .
-    - run: git commit -m "Adding demo to IAC"
-    - run: git push
+    - run: cp -a /deployment/. /microservice-configurations/demo/
+    - run: cd microservice-configurations && git add . && git commit -m "Adding demo to IAC" && git push
 
 
 
