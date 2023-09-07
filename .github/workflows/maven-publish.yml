@@ -48,5 +48,5 @@ jobs:
       with:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
-        repository: 'https://github.com/paulopanini/microservice-configurations'
+        repository: 'paulopanini/microservice-configurations'
     - run: ls
