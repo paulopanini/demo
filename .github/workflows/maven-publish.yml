@@ -19,7 +19,7 @@ jobs:
       # uses: cpina/github-action-push-to-another-repository@07c4d7b3def0a8ebe788a8f2c843a4e1de4f6900
       uses: cpina/github-action-push-to-another-repository@v1.7.2
       env:
-        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+        API_TOKEN_GITHUB: ${{ secrets.API_GITHUB_TOKEN }}
       with:
         # Source before directory from the origin directory
         source-before-directory: deployment
