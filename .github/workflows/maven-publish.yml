@@ -68,10 +68,10 @@ jobs:
         git remote set-url origin https://token:${{ secrets.API_GITHUB_TOKEN }}@github.com/paulopanini/microservice-configurations.git
         git config --global user.email "backstage@benify.com"
         git config --global user.name "backstage"
-        sed -i -E "s/(demo:)[a-z|0-9]*/demo:${{ needs.build.myda_date }}/g" deployment.yaml
+        sed -i -E "s/(demo:)[a-z|0-9]*/demo:${{ needs.build.outputs.my_date }}/g" deployment.yaml
         echo "test"
         git add .
-        git commit -m "Deploy ${{ needs.build.my_date }}"
+        git commit -m "Deploy ${{ needs.build.outputs.my_date }}"
         git push
 
   first-deploy:
